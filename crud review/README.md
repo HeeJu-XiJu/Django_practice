@@ -187,3 +187,28 @@ def create(request):
 
 </body>
 ```
+
+19. DELETE
+`urls.py`
+```
+    path('posts/<int:id>/delete/', views.delete),
+```
+
+`views.py`
+```
+def delete(request, id):
+    post = Post.objects.get(id=id)
+    post.delete()
+
+    return redirect('/index/')
+```
+
+`detail.html`
+```
+<body>
+    <h1>detail</h1>
+    <p>{{post.title}}</p>
+    <p>{{post.content}}</p>
+    <a href="/posts/{{post.id}}/delete/">delete</a>
+</body>
+```
