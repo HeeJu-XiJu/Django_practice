@@ -32,3 +32,57 @@ django-admin startapp <appname>
 
 8. 앱 등록 \
 `setting.py`의 `INSTALLED_APPS` `<appname>`등록
+
+9. 공통 base.html 작성
+`setting.py` - `TEMPLATES`
+```
+'DIRS': [BASE_DIR / 'templates'],
+```
+
+`board`-`urls.py`
+```
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('articles/', include('articles.urls')),
+]
+```
+
+`<appname>`의 `urls.py` 생성 후
+```
+from django.urls import path
+from . import views
+
+app_name = 'articles'
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+```
+
+`views.py`
+```
+def index(request):
+    return render(request, 'index.html')
+```
+
+`templates`생성 후 
+`base.html`
+```
+<body>
+    <h1>base</h1>
+    {% block body %}
+
+    {% endblock %}
+</body>
+```
+
+`index.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>안녕하세요</h1>
+{% endblock %}
+```
