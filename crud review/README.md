@@ -212,3 +212,63 @@ def delete(request, id):
     <a href="/posts/{{post.id}}/delete/">delete</a>
 </body>
 ```
+
+20. UPDATE
+`urls.py`
+```
+    path('posts/<int:id>/edit/', views.edit),
+    path('posts/<int:id>/update/', views.update),
+```
+
+`detail.html`
+```
+<body>
+    <h1>detail</h1>
+    <p>{{post.title}}</p>
+    <p>{{post.content}}</p>
+    <a href="/posts/{{post.id}}/delete/">delete</a>
+    <a href="/posts/{{post.id}}/edit">edit</a>
+</body>
+```
+
+`views.py`
+```
+def edit(request, id):
+    post = Post.objects.get(id=id)
+
+    context = {
+        'post': post,
+    }
+
+    return render(request, 'edit.html', context)
+```
+
+`edit.html`
+```
+<body>
+    
+    <form action="/posts/{{post.id}}/update/">
+        <label for="title">title</label>
+        <input type="text" id="title" name="title" value="{{post.title}}">
+        <label for="content">content</label>
+        <textarea name="content" id="content" cols="30" rows="10">{{post.content}}</textarea>
+
+        <input type="submit">
+    </form>
+</body>
+```
+
+`views.py`
+```
+def update(request, id):
+    title = request.GET.get('title')
+    content = request.GET.get('content')
+
+    post = Post.objects.get(id=id)
+    post.title = title
+    post.content = content
+    post.save()
+
+    return redirect(f'/posts/{post.id}/')
+```
+
