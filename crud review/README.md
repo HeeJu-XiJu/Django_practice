@@ -92,3 +92,28 @@ python manage.py createsuperuser
 
 (Username : admin)
 (Password : 1234)
+
+17. READ
+- 전체 게시물 출력
+`views.py`
+```
+def index(request):
+    posts = Post.objects.all()
+
+    context = {
+        'posts': posts,
+    }
+    return render(request, 'index.html', context)
+```
+
+`index.html`
+```
+<body>
+    <h1>index</h1>
+    {% for post in posts %}
+        <p>{{post.title}}</p>
+        <p>{{post.content}}</p>
+        <hr>
+    {% endfor %}
+</body>
+```
