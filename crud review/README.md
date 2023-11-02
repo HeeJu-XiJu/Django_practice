@@ -65,4 +65,12 @@ class Post(models.Model):
     content = models.TextField()
 ```
 
-13.
+13. 번역본 생성
+```python
+python manage.py makemigrations
+```
+
+14. DB에 반영
+```python
+python manage.py migrate
+```
