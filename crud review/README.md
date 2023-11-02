@@ -55,3 +55,14 @@ urlpatterns = [
 def index(request):
     return render(request, 'index.html')
 ```
+
+11. `templates` 폴더 -> `index.html` 생성
+
+12. 모델 정의(`models.py`)
+```python
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+```
+
+13.
