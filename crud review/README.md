@@ -117,3 +117,29 @@ def index(request):
     {% endfor %}
 </body>
 ```
+
+- 하나의 게시물 출력
+`urls.py`
+```
+path('posts/<int:id>/', views.detail),
+```
+
+`view.py`
+```
+def detail(request, id):
+    post = Post.objects.get(id=id)
+
+    context = {
+        'post' : post,
+    }
+    return render(request, 'detail.html', context)
+```
+
+`detail.html`
+```
+<body>
+    <h1>detail</h1>
+    {{post}}
+</body>
+```
+
