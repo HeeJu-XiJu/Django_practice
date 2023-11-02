@@ -74,3 +74,21 @@ python manage.py makemigrations
 ```python
 python manage.py migrate
 ```
+
+15. 생성한 모델을 admin에 등록(`admin.py`)
+```
+from django.contrib import admin
+from .models import Post
+
+# Register your models here.
+
+admin.site.register(Post)
+```
+
+16. 관리자 계정 생성
+```python
+python manage.py createsuperuser
+```
+
+(Username : admin)
+(Password : 1234)
