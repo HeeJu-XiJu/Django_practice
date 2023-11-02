@@ -113,6 +113,7 @@ def index(request):
     {% for post in posts %}
         <p>{{post.title}}</p>
         <p>{{post.content}}</p>
+        <a href="/posts/{{post.id}}">detail</a>
         <hr>
     {% endfor %}
 </body>
@@ -140,6 +141,49 @@ def detail(request, id):
 <body>
     <h1>detail</h1>
     {{post}}
+    <p>{{post.title}}</p>
+    <p>{{post.content}}</p>
 </body>
 ```
 
+18. CREATE
+`urls.py`
+```
+    path('posts/new/', views.new),
+    path('bosts/create/', views.create),
+```
+
+`views.py`
+```
+def new(request):
+    return render(request, 'new.html')
+
+
+def create(request):
+    title = request.GET.get('title')
+    content = request.GET.get('content')
+
+    post = Post()
+    post.title = title
+    post.content = content
+    post.save()
+
+    return redirect(f'/posts/{post.id}/')
+```
+
+`new.html`
+```
+<body>
+    <h1>new</h1>
+
+    <form action="/posts/create/">
+        <label for="title">title</label>
+        <input type="text" id="title" name="title">
+        <label for="content">content</label>
+        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+
+        <input type="submit">
+    </form>
+
+</body>
+```
