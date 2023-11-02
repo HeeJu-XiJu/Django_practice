@@ -86,3 +86,36 @@ def index(request):
     <h1>안녕하세요</h1>
 {% endblock %}
 ```
+
+10. 모델링/마이그레이션
+`models.py`
+```
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+```
+
+- 번역본 생성
+```
+python manage.py makemigrations
+```
+
+- DB에 반영
+```
+python manage.py migrate
+```
+
+`admin.py`
+```
+from django.contrib import admin
+from .models import Article
+
+# Register your models here.
+admin.site.register(Article)
+```
+
+- 관리자 계정 생성
+```
+python manage.py createsuperuser
+```
