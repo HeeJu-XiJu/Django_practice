@@ -147,7 +147,7 @@ def index(request):
 {% endblock %}
 ```
 
-`base.html`
+`<pjt> - <templates>` `base.html`
 CDN 등록
 Navebar 추가
 
