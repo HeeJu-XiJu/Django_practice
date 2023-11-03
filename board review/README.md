@@ -119,3 +119,36 @@ admin.site.register(Article)
 ```
 python manage.py createsuperuser
 ```
+
+11. READ(all)
+`views.py`
+```
+from .models import Article
+
+# Create your views here.
+def index(request):
+    articles = Article.objects.all()
+
+    context = {
+        'articles': articles,
+    }
+
+    return render(request, 'index.html', context)
+```
+
+`index.html`
+```
+{% block body %}
+    <h1>안녕하세요</h1>
+
+    {% for article in articles %}
+        <p>{{ article }}</p>
+    {% endfor %}
+{% endblock %}
+```
+
+`base.html`
+CDN 등록
+Navebar 추가
+
+
