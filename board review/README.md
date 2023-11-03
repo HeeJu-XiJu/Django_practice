@@ -139,16 +139,28 @@ def index(request):
 `index.html`
 ```
 {% block body %}
-    <h1>안녕하세요</h1>
-
-    {% for article in articles %}
-        <p>{{ article }}</p>
-    {% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.title }}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
 ```
 
 `<pjt> - <templates>` `base.html`
 CDN 등록
 Navebar 추가
-
 
