@@ -14,7 +14,9 @@
             <tr>
                 <td>{{ article.id }}</td>
                 <td>{{ article.title }}</td>
-                <td></td>
+                <td>
+                    <a href="{% url 'articles:detail' id=article.id %}">detail</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

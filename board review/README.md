@@ -164,3 +164,32 @@ def index(request):
 CDN 등록
 Navebar 추가
 
+12. Read(1)
+`urls.py`
+```
+    path('<int:id>', views.detail, name='detail'),
+```
+
+`views.py`
+```
+def detail(request, id):
+    article = Article.object.get(id=id)
+
+    context = {
+        'article': article,
+    }
+
+    return render(request, 'detail.html', context)
+```
+
+`index.html`
+```
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.title }}</td>
+                <td>
+                    <a href="{% url 'articles:detail' id=article.id %}">detail</a>
+                </td>
+            </tr>
+```
+
