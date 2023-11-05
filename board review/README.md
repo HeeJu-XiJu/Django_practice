@@ -266,3 +266,65 @@ def delete(request, id):
 
     return redirect('articles:index')
 ```
+
+15. Update
+`urls.py`
+```
+    path('<int:id>/edit/', views.edit, name='edit'),
+    path('<int:id>/update/', views.update, name='update'),
+```
+
+`views.py`
+```
+def edit(request, id):
+    article = Article.objects.get(id=id)
+
+    context = {
+        'article' : article,
+    }
+    
+    return render(request, 'edit.html', context)
+
+
+def update(request, id):
+    # 새로운 정보
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+
+    # 기존 정보
+    article = Article.objects.get(id=id)
+
+    article.title = title
+    article.content = content
+    article.save()
+
+    return redirect('articles:detail', id=article.id)
+```
+
+`detail.html`
+```
+            <a href="{% url 'articles:edit' id=article.id %}" class="btn btn-warning">edit</a>
+```
+
+`edit.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="{% url 'articles:update' id=article.id %}" class="mt-4" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{article.title}}">
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">content</label>
+            <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{article.content}}</textarea>
+        </div>
+
+        <input type="submit" class="btn btn-primary">
+    </form>
+
+{% endblock %}
+```

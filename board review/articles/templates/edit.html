@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="{% url 'articles:update' id=article.id %}" class="mt-4" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{article.title}}">
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">content</label>
+            <textarea name="content" id="content" cols="30" rows="10" class="form-control">{{article.content}}</textarea>
+        </div>
+
+        <input type="submit" class="btn btn-primary">
+    </form>
+
+{% endblock %}
