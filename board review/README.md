@@ -247,3 +247,22 @@ def create(request):
 {% endblock %}
 ```
 
+14. Delete
+`url.py`
+```
+    path('<int:id>/delete/', views.delete, name='delete'),
+```
+
+`detail.html`
+```
+<a href="{% url 'articles:delete' id=article.id %}" class="btn btn-danger">delete</a>
+```
+
+`views.py`
+```
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    article.delete()
+
+    return redirect('articles:index')
+```
