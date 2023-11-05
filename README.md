@@ -26,3 +26,12 @@ pip install django
 python manage.py runserver
 ```
 
+2. 앱 생성/앱 등록
+- 앱 생성
+```
+django-admin startapp <appname>
+```
+
+- 앱 등록
+`setting.py`의 `INSTALLED_APPS`에 app 등록
+
