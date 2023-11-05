@@ -35,3 +35,50 @@ django-admin startapp <appname>
 - 앱 등록
 `setting.py`의 `INSTALLED_APPS`에 app 등록
 
+3. `base.html`작성
+- 최상위 폴더 `templates`생성 후 `base.html`생성
+```
+<body>
+    {% block body %}
+    
+    {% endblock %}
+</body>
+```
+
+- `settings.py`의 `TEMPLATES`
+```
+'DIRS': [BASE_DIR / 'templates'],
+```
+
+- `<pjtname>`의 `urls.py`
+```
+from django.urls import path, include
+
+    path('articles/', include('articles.urls')),
+
+```
+
+- `<appname>`의 `urls.py`
+```
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index')
+]
+```
+
+- `views.py`
+```
+def index(request):
+    return render(request, 'index.html')
+```
+
+- `<appname>`의 `templates`생성 후 `index.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>index</h1>
+{% endblock %}
+```
