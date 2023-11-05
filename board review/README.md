@@ -193,3 +193,57 @@ def detail(request, id):
             </tr>
 ```
 
+13. Create
+`urls.py`
+```
+    path('new/', views.new, name='new'),
+    path('create/', views.create, name='create'),
+```
+
+`base.html`
+```
+# Nevbar
+        <a class="navbar-brand" href="{% url 'articles:index' %}">Home</a>
+        <a class="nav-link active" aria-current="page" href="{% url 'articles:new' %}">New</a>
+```
+
+`views.py`
+```
+def new(request):
+    return render(request, 'new.html')
+
+
+def create(request):
+    title = request.POST.get('title')
+    content = request.POST.get('content')
+
+    article = Article()
+    article.title = title
+    article.content = content
+    article.save()
+    return redirect('articles:detail', id=article.id)
+```
+
+`new.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="{% url 'articles:create' %}" class="mt-4" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">title</label>
+            <input type="text" class="form-control" id="title" name="title">
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">content</label>
+            <textarea name="content" id="content" cols="30" rows="10" class="form-control"></textarea>
+        </div>
+
+        <input type="submit" class="btn btn-primary">
+    </form>
+
+{% endblock %}
+```
+
