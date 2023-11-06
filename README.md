@@ -241,3 +241,22 @@ def create(request):
 
         return render(request, 'create.html', context)
 ```
+
+8. CREATE(2)
+`views.py`
+```
+def create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article = form.save()
+            return redirect('articles:index')
+    else:
+        form = ArticleForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'create.html', context)
+```
