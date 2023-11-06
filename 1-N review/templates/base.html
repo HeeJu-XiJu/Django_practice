@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<a href="{% url 'articles:index' %}">Home</a>
+<a href="{% url 'articles:create' %}">New</a>
 <body>
     {% block body %}
     {% endblock %}
