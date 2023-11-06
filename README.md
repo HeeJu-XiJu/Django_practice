@@ -180,3 +180,64 @@ def detail(request, id):
 
 {% endblock %}
 ```
+
+7. CREATE
+- `index.html`
+```
+    <a href="{% url 'articles:create' %}">create</a>
+```
+
+- `urls.py`
+```
+    path('create/', views.create, name='create'),
+```
+
+- `forms.py`
+```
+from django import forms
+from .models import Article
+
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Articlefields = '__all__'
+```
+
+- `create.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+
+{% endblock %}
+```
+
+- `views.py`
+```
+from django.shortcuts import render, redirect
+from .forms import ArticleForm
+
+def create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article = form.save()
+            return redirect('articles:index')
+        else:
+            context = {
+                'form': form,
+            }
+            return render(request, 'create.html', context)
+    else:
+        form = ArticleForm()
+
+        context = {
+            'form': form,
+        }
+
+        return render(request, 'create.html', context)
+```
