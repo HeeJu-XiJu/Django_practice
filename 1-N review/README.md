@@ -82,3 +82,33 @@ admin.site.register(Comment)
 ```
 python manage.py createsuperuser
 ```
+
+5. READ(ALL)
+- `urls.py`
+```
+from . import views
+path('', views.index, name='index'),
+```
+
+- `appname` - `templates` - `index.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    {% for article in articles %}
+        <p>{{article.title}}</p>
+        <hr>
+    {% endfor %}
+{% endblock %}
+```
+
+- `views.py`
+```
+def index(request):
+    articles = Article.objects.all()
+
+    context = {
+        'articles': articles,
+    }
+    return render(request, 'index.html', context)
+```
