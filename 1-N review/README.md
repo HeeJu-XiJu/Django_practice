@@ -112,3 +112,37 @@ def index(request):
     }
     return render(request, 'index.html', context)
 ```
+
+
+6. READ(1)
+- `urls.py`
+```
+app_name = 'articles'
+path('<int:id>', views.detail, name='detail'),
+```
+
+- `index.html`
+```
+        <a href="{% url 'articles:detail' id=article.id %}">detail</a>
+```
+
+- `detail.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>{{ article.title }}</h1>
+    <p>{{ article.content }}</p>
+{% endblock %}
+```
+
+- `views.py`
+```
+def detail(request, id):
+    article = Article.objects.get(id=id)
+
+    context = {
+        'article': article,
+    }
+    return render(request, 'detail.html', context)
+```
