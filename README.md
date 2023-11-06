@@ -279,3 +279,47 @@ def delete(request, id):
     article.delete()
     return redirect('articles:index')
 ```
+
+10. UPDATE
+`index.html`
+```
+        <a href="{% url 'articles:update' id=article.id %}">update</a>
+```
+
+`urls.py`
+```
+        path('<int:id>/update/', views.update, name='update'),
+```
+
+`update.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+{% endblock %}
+```
+
+`views.py`
+```
+def update(request, id):
+    article = Article.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:detail', id=article.id)
+    else:
+        form = ArticleForm(instance=article)
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'update.html', context)
+```
