@@ -249,7 +249,7 @@ def update(request, id):
 ```
 
 
-10. COMMENT READ
+10. COMMENT CREATE
 - `form.py`
 ```
 from .models import Article, Comment
@@ -303,3 +303,31 @@ def comment_create(request, article_id):
 
         return redirect('articles:detail', id=article_id)
 ```
+
+11. COMMENT READ
+- `views.py`
+```
+from .models import Article, Comment
+
+def detail(request, id):
+    article = Article.objects.get(id=id)
+    form = CommentForm()
+    # 1. comments = Comment.objects.filter(article=article)
+    # 2. comments = article.comment_set.all()
+    # 3. HTML코드에서 2 사용
+
+    context = {
+        'article': article,
+        'form': form,
+        #'comments': comments,
+    }
+    return render(request, 'detail.html', context)
+```
+
+- `detail.html`
+```
+    {% for comment in article.comment_set.all %}
+        <p>{{ comment.comment }}</p>
+    {% endfor %}
+```
+
