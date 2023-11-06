@@ -82,3 +82,37 @@ def index(request):
     <h1>index</h1>
 {% endblock %}
 ```
+
+4. 모델링/마이그레이션
+- `models.py`
+```
+class Article(models.Model):
+    title = models.CharField(max_length=50)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+```
+
+- 번역본 생성
+```
+python manage.py makemigrations
+```
+
+- DB에 반영
+```
+python manage.py migrate
+```
+
+- `admin.py`
+```
+from .models import Article
+admin.site.register(Article)
+```
+
+- 관리자 계정 생성
+```
+python manage.py createsuperuser
+```
+
+- migratite 이후 model을 수정할 시, db.sqlite3와 migrations파일을 삭제 후 재실행
+(오류화면 table articles_article has no column named title)
