@@ -28,3 +28,23 @@ django-admin startapp <appname>
 ```
 - 앱 등록
 `setting.py`의 `INSTALLED_APPS`의 `<appname>`
+
+3. `base.html` 세팅
+- 최상위 `templates` - `base.html`
+```
+<body>
+    {% block body %}
+    {% endblock %}
+</body>
+```
+
+- `setting.py`
+```
+'DIRS': [BASE_DIR, 'templates'],
+```
+
+- `pjtname` - `urls.py`
+```
+from django.urls import path, include
+path('articles/', include('articles.urls')),
+```
