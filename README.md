@@ -323,3 +323,9 @@ def update(request, id):
 
     return render(request, 'update.html', context)
 ```
+
+11. `create.html`, `update.html` 통합
+- `create.html`, `update.html` 삭제
+- `form.html`생성 
+- `views.py`
+`create.html`, `update.html` => `form.html`로 수정
