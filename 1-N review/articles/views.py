@@ -34,3 +34,9 @@ def create(request):
     }
 
     return render(request, 'form.html', context)
+
+
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    article.delete()
+    return redirect('articles:index')

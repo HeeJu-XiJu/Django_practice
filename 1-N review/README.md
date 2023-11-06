@@ -198,3 +198,23 @@ def create(request):
 
     return render(request, 'form.html', context)
 ```
+
+
+8. DELETE
+`index.html`
+```
+<a href="{% url 'articles:delete' id=article.id %}">delete</a>
+```
+
+`urls.py`
+```
+path('<int:id>/delete', views.delete, name='delete'),
+```
+
+`views.py`
+```
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    article.delete()
+    return redirect('articles:index')
+```
