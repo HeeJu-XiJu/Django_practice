@@ -146,3 +146,55 @@ def detail(request, id):
     }
     return render(request, 'detail.html', context)
 ```
+
+7. CREATE
+- `form.py`
+```
+from django import forms
+from .models import Article
+
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        fields = '__all__'
+```
+
+- `index.html`
+```
+<a href="{% url 'articles:create' %}">create</a>
+```
+
+- `urls.py`
+```
+path('create/', views.create, name='create'),
+```
+
+- `form.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+{% endblock %}
+```
+
+- `views.py`
+```
+def create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article = form.save()
+            return redirect('articles:detail', id=article.id)
+    else:
+        form = ArticleForm()
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'form.html', context)
+```
