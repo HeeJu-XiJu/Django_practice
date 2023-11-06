@@ -247,3 +247,59 @@ def update(request, id):
     }
     return render(request, 'form.html', context)
 ```
+
+
+10. COMMENT READ
+- `form.py`
+```
+from .models import Article, Comment
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ('article', )
+        # fields = ('comment', )
+```
+
+- `detail.html`
+```
+<form action="{% url 'articles:comment_create' article_id=article.id %}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+```
+
+- `urls.py`
+```
+path('<int:article_id>/comments/create/', views.comment_create, name='comment_create'),
+```
+
+- `views.py`
+```
+from .form import ArticleForm, CommentForm
+
+def detail(request, id):
+    form = CommentForm()
+
+    context = {
+        'article': article,
+        'form': form,
+    }
+
+
+def comment_create(request, article_id):
+    form = CommentForm(request.POST)
+
+    if form.is_valid():
+        comment = form.save(commit=False)
+
+        # article = Article.objects.get(id=article_id)
+        # comment.article = article
+        # comment.save()
+
+        comment.article_id = article_id
+        comment.save()
+
+        return redirect('articles:detail', id=article_id)
+```
