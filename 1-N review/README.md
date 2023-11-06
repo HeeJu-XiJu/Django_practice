@@ -48,3 +48,37 @@ django-admin startapp <appname>
 from django.urls import path, include
 path('articles/', include('articles.urls')),
 ```
+
+4. 모델링/마이그레이션
+- `models.py`
+```
+class Article(models.Model):
+    title = models.CharField(max_length=50)
+    content = models.TextField()
+
+class Comment(models.Model):
+    comment = models.TextField()
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+```
+
+- 번역본 생성
+```
+python manage.py makemigrations
+```
+
+- DB에 반영
+```
+python manage.py migrate
+```
+
+- `admin.py`
+```
+from .models import Article, Comment
+admin.site.register(Article)
+admin.site.register(Comment)
+```
+
+- 관리자계정 생성
+```
+python manage.py createsuperuser
+```
