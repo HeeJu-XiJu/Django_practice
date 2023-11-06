@@ -116,3 +116,30 @@ python manage.py createsuperuser
 
 - migratite 이후 model을 수정할 시, db.sqlite3와 migrations파일을 삭제 후 재실행
 (오류화면 table articles_article has no column named title)
+
+5. READ(ALL)
+`views.py`
+```
+from .models import Article
+
+def index(request):
+    articles = Article.objects.all()
+
+    context = {
+        'articles': articles,
+    }
+    return render(request, 'index.html', context)
+```
+
+`index.html`
+```
+{% block body %}
+    <h1>index</h1>
+
+    {% for article in articles %}
+        <p>{{ article.title }}</p>
+        <p>{{ article.content }}</p>
+        <hr>
+    {% endfor %}
+{% endblock %}
+```
