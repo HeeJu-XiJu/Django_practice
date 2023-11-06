@@ -218,3 +218,16 @@ def delete(request, id):
     article.delete()
     return redirect('articles:index')
 ```
+
+
+9. UPDATE
+- `index.html`
+```
+        <a href="{% url 'articles:update' id=article.id %}">edit</a>
+```
+
+- `urls.py`
+```
+path('<int:id>/update/', views.update, name='update'),
+```
+

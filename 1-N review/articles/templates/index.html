@@ -5,6 +5,7 @@
         <p>{{article.title}}</p>
         <a href="{% url 'articles:detail' id=article.id %}">detail</a>
         <a href="{% url 'articles:delete' id=article.id %}">delete</a>
+        <a href="{% url 'articles:update' id=article.id %}">edit</a>
         <hr>
     {% endfor %}
     <a href="{% url 'articles:create' %}">create</a>
