@@ -16,6 +16,7 @@
 
     {% for comment in article.comment_set.all %}
         <p>{{ comment.comment }}</p>
+        <a href="{% url 'articles:comment_delete' article_id=article.id id=comment.id %}">delete</a>
     {% endfor %}
 
 {% endblock %}

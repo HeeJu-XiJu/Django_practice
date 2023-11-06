@@ -331,3 +331,23 @@ def detail(request, id):
     {% endfor %}
 ```
 
+
+12. COMMENT DELETE
+- `detail.html`
+```
+<a href="{% url 'articles:comment_delete' article_id=article.id id=comment.id %}">delete</a>
+```
+
+- `urls.py`
+```
+    path('<int:article_id>/comments/<int:id>/delete/', views.comment_delete, name='comment_delete'),
+```
+
+- `views.py`
+```
+def comment_delete(request, article_id, id):
+    comment = Comment.objects.get(id=id)
+    comment.delete()
+
+    return redirect('articles:detail', id=article_id)
+```
