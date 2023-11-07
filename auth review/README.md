@@ -10,3 +10,29 @@
 - `setting.py`-`INSTALLED_APPS`-`<appname>`등록
 - `base.html`생성
 - `setting.py`-`'DIRS': [BASE_DIR, 'templates'],`
+
+## accounts
+3. 모델링/마이그레이션
+- `models.py`
+```
+from django.contrib.auth.models import AbstractUser
+
+class User(AbstractUser):
+    pass
+```
+
+- `settings.py`
+```
+AUTH_USER_MODEL = 'accounts.User'
+```
+
+- `admin.py`
+```
+from .models import User
+
+admin.site.register(User)
+```
+
+- `python manage.py makemigrations`
+- `python manage.py migrate`
+- `python manage.py createsuperuser`
