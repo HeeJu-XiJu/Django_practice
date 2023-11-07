@@ -195,3 +195,25 @@ def logout(request):
     auth_logout(request)
     return redirect('accounts:login')
 ```
+
+### articles
+8. 모델링/마이그레이션
+- `models.py`
+```
+from django.contrib.auth import get_user_model
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+```
+
+- `admin.py`
+```
+from .models import Article
+
+admin.site.register(Article)
+```
+
+- `python manage.py makemigrations`
+- `python manage.py migrate`
