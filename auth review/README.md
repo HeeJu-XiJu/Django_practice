@@ -140,3 +140,45 @@ def signup(request):
     </form>
 {% endblock %}
 ```
+
+6. Login
+- `forms.py`
+```
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+class CustumAuthenticationForm(AuthenticationForm):
+    pass
+```
+
+- `urls.py`
+```
+path('login/', views.login, name='login'),
+```
+
+- `views.py`
+```
+def login(request):
+    if request.method == 'POST':
+        form = CustumAuthenticationForm(request, request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            return redirect('articles:index')
+    else:
+        form = CustumAuthenticationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'login.html', context)
+```
+
+- `login.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+{% endblock %}
+```
