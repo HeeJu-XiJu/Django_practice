@@ -5,7 +5,12 @@ from .form import ArticleForm
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    articles = Article.objects.all()
+
+    context = {
+        'articles': articles,
+    }
+    return render(request, 'index.html', context)
 
 
 def create(request):

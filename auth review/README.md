@@ -267,3 +267,31 @@ def create(request):
     }
     return render(request, 'create.html', context)
 ```
+
+
+10. Read(All)
+- `views.py`
+```
+def index(request):
+    articles = Article.objects.all()
+
+    context = {
+        'articles': articles,
+    }
+    return render(request, 'index.html', context)
+```
+
+- `index.html`
+```
+{% extends 'base.html' %}
+
+{% block body%}
+    <h1>index</h1>
+
+    {% for article in articles %}
+        {{ article.title }}
+        {{ article.user }}
+        <hr>
+    {% endfor %}
+{% endblock %}
+```
