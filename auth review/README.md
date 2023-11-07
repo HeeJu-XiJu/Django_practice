@@ -36,3 +36,43 @@ admin.site.register(User)
 - `python manage.py makemigrations`
 - `python manage.py migrate`
 - `python manage.py createsuperuser`
+
+4. Index
+- `auth urls.py`
+```
+from django.urls import path, include
+    path('articles/', include('articles.urls')),
+```
+
+- `articles urls.py`
+```
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+```
+
+- `views.py`
+```
+def index(request):
+    return render(request, 'index.html')
+```
+
+- `base.html`
+```
+<body>
+    {% block body %}
+    {% endblock %}
+</body>
+```
+
+- `index.html`
+```
+{% extends 'base.html' %}
+
+{% block body%}
+    <h1>index</h1>
+{% endblock %}
+```
