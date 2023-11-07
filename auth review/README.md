@@ -49,6 +49,8 @@ from django.urls import path, include
 from django.urls import path
 from . import views
 
+app_name = 'articles'
+
 urlpatterns = [
     path('', views.index, name='index'),
 ]
@@ -74,5 +76,67 @@ def index(request):
 
 {% block body%}
     <h1>index</h1>
+{% endblock %}
+```
+
+5. Signup
+- `forms.py`
+```
+from .models import User
+from django.contrib.auth.forms import UserCreationForm
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields
+```
+
+- `auth urls.py`
+```
+path('accounts/', include('accounts.urls')),
+```
+
+- `accounts urls.py`
+```
+from django.urls import path
+from . import views
+
+app_name = 'accounts'
+
+urlpatterns = [
+    path('signup/', views.signup, name='signup'),
+]
+```
+
+- `views.py`
+```
+from django.shortcuts import render, redirect
+from .forms import CustomUserCreationForm
+
+# Create your views here.
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:index')
+    else:
+        form = CustomUserCreationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'signup.html', context)
+```
+
+- `signup.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
 {% endblock %}
 ```
