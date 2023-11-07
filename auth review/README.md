@@ -182,3 +182,16 @@ def login(request):
     </form>
 {% endblock %}
 ```
+
+7. Logout
+- `urls.py`
+```
+    path('logout/', views.logout, name='logout'),
+```
+
+- `views.py`
+```
+def logout(request):
+    auth_logout(request)
+    return redirect('accounts:login')
+```
