@@ -217,3 +217,53 @@ admin.site.register(Article)
 
 - `python manage.py makemigrations`
 - `python manage.py migrate`
+
+
+9. Create
+- `urls.py`
+```
+path('create/', views.create, name='create'),
+```
+
+- `forms.py`
+```
+from django import forms
+from .models import Article
+
+class ArticleForm(forms.ModelForm):
+    class Meta:
+        model = Article
+        exclude = ('user', )
+```
+
+- `create.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+    </form>
+{% endblock %}
+```
+
+- `views.py`
+```
+from django.shortcuts import render, redirect
+
+def create(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.user = request.user
+            article.save()
+            return redirect('articles:index')
+    else:
+        form = ArticleForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'create.html', context)
+```
