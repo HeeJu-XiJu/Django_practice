@@ -392,3 +392,52 @@ class Comment(models.Model):
 
 - `python manage.py makemigrations`
 - `python manage.py migrate`
+
+
+15. Create
+- `form.py`
+```
+from .models import Article, Comment
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('content', )
+```
+
+- `urls.py`
+```
+    path('<int:article_id>/comments/create/', views.comment_create, name='comment_create'),
+```
+
+- `detail.html`
+```
+<form action="{% url 'articles:comment_create' article_id=article.id %}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit">
+    </form>
+```
+
+- `views.py`
+```
+def detail(request, id):
+    form = CommentForm()
+    context = {
+        'article': article, 
+        'form': form,
+    }
+
+from .form import ArticleForm, CommentForm
+
+def comment_create(request, article_id):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+
+        comment.user_id = request.user.id
+        comment.article_id = article_id
+
+        comment.save()
+        return redirect('articles:detail', id=article_id)
+```
