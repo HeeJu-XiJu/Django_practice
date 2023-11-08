@@ -6,11 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>index</h1>
-    {% for post in posts %}
+    <h1>detail</h1>
     <h3>{{ post.title }}</h3>
-    <p>{{ post.content}}</p>
-    <a href="/posts/{{post.id}}">detail</a>
-    {% endfor %}
+    <p>{{ post.content }}</p>
 </body>
 </html>
