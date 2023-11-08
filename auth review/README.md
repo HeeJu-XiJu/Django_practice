@@ -441,3 +441,35 @@ def comment_create(request, article_id):
         comment.save()
         return redirect('articles:detail', id=article_id)
 ```
+
+
+16. login_required/next 인자처리
+- `accounts`-`views.py`
+```
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            next_url = request.GET.get('next')
+            return redirect(next_url or 'articles:index')
+```
+
+- `views.py`
+```
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def create(request):
+
+@login_required
+def comment_create(request, article_id):
+```
+
+- `detail.html`
+```
+    {% if user.is_authenticated %}
+        <form action="{% url 'articles:comment_create' article_id=article.id %}" method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit">
+        </form>
+    {% endif %}
+```
