@@ -48,3 +48,10 @@ def create(request):
 ```
     <a href="/posts/new">create</a>
 ```
+
+
+7. Delete
+- `index.html`
+```
+    <a href="/posts/{{post.id}}/delete/">delete</a>
+```

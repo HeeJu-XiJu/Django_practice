@@ -34,3 +34,9 @@ def create(request):
     post.save()
 
     return redirect(f'/posts/{post.id}')
+
+
+def delete(request, id):
+    post = Post.objects.get(id=id)
+    post.delete()
+    return redirect('/index/')
