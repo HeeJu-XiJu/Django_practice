@@ -295,3 +295,36 @@ def index(request):
     {% endfor %}
 {% endblock %}
 ```
+
+
+11. Read(1)
+- `index.html`
+```
+        <a href="{% url 'articles:detail' id=article.id %}">detail</a>
+```
+
+- `urls.py`
+```
+    path('<int:id>/', views.detail, name='detail'),
+```
+
+- `views.py`
+```
+def detail(request, id):
+    article = Article.objects.get(id=id)
+    context = {
+        'article': article, 
+    }
+    return render(request, 'detail.html', context)
+```
+
+- `detail.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+    <h3>{{ article.title }}</h3>
+    <p>{{ article.content}}</p>
+    <p>{{ article.user }}</p>
+{% endblock %}
+```

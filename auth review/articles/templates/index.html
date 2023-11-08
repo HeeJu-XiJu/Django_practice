@@ -4,8 +4,9 @@
     <h1>index</h1>
 
     {% for article in articles %}
-        {{ article.title }}
-        {{ article.user }}
+        <p>{{ article.title }}</p>
+        <p>{{ article.user }}</p>
+        <a href="{% url 'articles:detail' id=article.id %}">detail</a>
         <hr>
     {% endfor %}
 {% endblock %}
