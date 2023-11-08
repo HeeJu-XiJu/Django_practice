@@ -483,3 +483,33 @@ def comment_create(request, article_id):
     <li>{{ comment.user }} : {{comment.content }}</li>
     {% endfor %}
 ```
+
+
+18. Comment Delete
+- `detail.html`
+```
+    <hr>
+    {% for comment in article.comment_set.all %}
+    <li>{{ comment.user }} : {{comment.content }}</li>
+        {% if user == comment.user %}
+        <a href="{% url 'articles:comment_delete' article_id=article.id id=comment.id %}">delete</a>
+        {% endif %}
+    {% endfor %}
+```
+
+- `urls.py`
+```
+path('<int:article_id>/comments/<int:id>/delete', views.comment_delete, name='comment_delete'),
+```
+
+- `views.py`
+```
+from .models import Article, Comment
+
+@login_required
+def comment_delete(request, article_id, id):
+    comment = Comment.objects.get(id=id)
+    if request.user == comment.user:
+        comment.delete()
+        return redirect('articles:detail', id=article_id)
+```
