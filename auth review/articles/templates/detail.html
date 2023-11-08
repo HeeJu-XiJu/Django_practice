@@ -4,7 +4,9 @@
     <h3>{{ article.title }}</h3>
     <p>{{ article.content}}</p>
     <p>{{ article.user }}</p>
+    {% if user == article.user %}
     <a href="{% url 'articles:update' id=article.id %}">update</a>
+    {% endif %}
 
     {% if user.is_authenticated %}
         <form action="{% url 'articles:comment_create' article_id=article.id %}" method="POST">

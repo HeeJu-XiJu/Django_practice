@@ -7,7 +7,9 @@
         <p>{{ article.title }}</p>
         <p>{{ article.user }}</p>
         <a href="{% url 'articles:detail' id=article.id %}">detail</a>
+        {% if user == article.user %}
         <a href="{% url 'articles:delete' id=article.id %}">delete</a>
+        {% endif %}
         <hr>
     {% endfor %}
 {% endblock %}

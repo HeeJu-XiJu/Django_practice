@@ -40,22 +40,28 @@ def detail(request, id):
     }
     return render(request, 'detail.html', context)
 
-
+@login_required
 def delete(request, id):
     article = Article.objects.get(id=id)
-    article.delete()
-    return redirect('articles:index')
+    
+    if request.user == article.user:
+        article.delete()
+        return redirect('articles:index')
 
 
+@login_required
 def update(request, id):
     article = Article.objects.get(id=id)
+
+    if request.user != article.user:
+        return redirect('articles:detail', id=id)
+    
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
+        form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
             article = form.save(commit=False)
-            article.user = request.user
             article.save()
-            return redirect('articles:detail', id=article.id)
+            return redirect('articles:detail', id=id)
     else:
         form = ArticleForm(instance=article)
     context = {
