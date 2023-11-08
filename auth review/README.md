@@ -380,3 +380,15 @@ def update(request, id):
     return render(request, 'create.html', context)
 ```
 
+### Articles(Comment)
+14. 모델링/마이그레이션
+- `models.py`
+```
+class Comment(models.Model):
+    content = models.TextField()
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+```
+
+- `python manage.py makemigrations`
+- `python manage.py migrate`
