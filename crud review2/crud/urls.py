@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.index, name='index'),
     path('posts/<int:id>/', views.detail, name='detail'),
+    path('posts/new/', views.new, name='new'),
+    path('posts/create/', views.create, name='create'),
 ]
