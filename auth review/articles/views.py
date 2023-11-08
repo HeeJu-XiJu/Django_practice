@@ -35,3 +35,9 @@ def detail(request, id):
         'article': article, 
     }
     return render(request, 'detail.html', context)
+
+
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    article.delete()
+    return redirect('articles:index')

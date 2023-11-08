@@ -328,3 +328,24 @@ def detail(request, id):
     <p>{{ article.user }}</p>
 {% endblock %}
 ```
+
+
+12. Delete
+- `index.html`
+```
+<a href="{% url 'articles:delete' id=article.id %}">delete</a>
+```
+
+- `urls.py`
+```
+path('<int:id>/delete/', views.delete, name='delete'),
+```
+
+- `views.py`
+```
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    article.delete()
+    return redirect('articles:index')
+```
+
