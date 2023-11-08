@@ -349,3 +349,34 @@ def delete(request, id):
     return redirect('articles:index')
 ```
 
+
+13. Update
+- `detail.html`
+```
+<a href="{% url 'articles:update' id=article.id %}">update</a>
+```
+
+- `urls.py`
+```
+path('<int:id>/update/', views.update, name='update'),
+```
+
+- `views.py`
+```
+def update(request, id):
+    article = Article.objects.get(id=id)
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.user = request.user
+            article.save()
+            return redirect('articles:detail', id=article.id)
+    else:
+        form = ArticleForm(instance=article)
+    context = {
+        'form': form, 
+    }
+    return render(request, 'create.html', context)
+```
+
