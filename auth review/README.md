@@ -473,3 +473,13 @@ def comment_create(request, article_id):
         </form>
     {% endif %}
 ```
+
+
+17. Comment Read
+- `detail.html`
+```
+<hr>
+    {% for comment in article.comment_set.all %}
+    <li>{{ comment.user }} : {{comment.content }}</li>
+    {% endfor %}
+```
