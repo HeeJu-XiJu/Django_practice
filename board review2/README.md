@@ -41,3 +41,7 @@ def edit(request, id):
     }
     return render(request, 'edit.html', context)
 ```
+
+
+## 정리
+- Creeate, Update 적용 시 form을 사용하여 다음 url 지정 가능
