@@ -55,3 +55,18 @@ def create(request):
 ```
     <a href="/posts/{{post.id}}/delete/">delete</a>
 ```
+
+
+8. Update
+- `views.py`
+```
+def update(request, id):
+    title = request.GET.get('title')
+    content = request.GET.get('content')
+
+    post = Post.objects.get(id=id)
+    post.title = title
+    post.content = content
+    post.save()
+    return redirect(f'/posts/{post.id}')
+```
