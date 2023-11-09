@@ -70,3 +70,22 @@ def update(request, id):
     post.save()
     return redirect(f'/posts/{post.id}')
 ```
+
+
+## 정리
+- Post.objects.all()
+: 모든 Posts를 들고와야 할 때 사용
+- Post.objects.get(id=id)
+: 특정 Post를 들고와야 할 때 사용
+---
+- `index.html` : 앞 `/`
+```
+<a href="/posts/{{post.id}}/delete/">delete</a>
+```
+`a tag`는 `http://127.0.0.1:8000` 뒤에 새로 주소를 할당
+
+- `urls.py` : 앞 `/`없음
+```
+path('posts/<int:id>/update/', views.update, name='update'),
+```
+`http://127.0.0.1:8000/`뒤에 주소를 할당
