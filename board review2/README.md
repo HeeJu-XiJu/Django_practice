@@ -32,3 +32,12 @@ def create(request):
 
 8. Delete
 9. Update
+- `views.py`
+```
+def edit(request, id):
+    article = Article.objects.get(id=id)
+    context = {
+        'article': article,
+    }
+    return render(request, 'edit.html', context)
+```
