@@ -29,3 +29,5 @@ def create(request):
         <input type="submit">
     </form>
 ```
+
+8. Delete

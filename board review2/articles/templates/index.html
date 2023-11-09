@@ -8,5 +8,6 @@
         <p>{{article.content}}</p>
         <p>{{article.created_at}}</p>
         <a href="{% url 'articles:detail' id=article.id %}">detail</a>
+        <a href="{% url 'articles:delete' id=article.id %}">delete</a>
     {% endfor %}
 {% endblock %}
