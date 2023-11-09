@@ -31,3 +31,4 @@ def create(request):
 ```
 
 8. Delete
+9. Update

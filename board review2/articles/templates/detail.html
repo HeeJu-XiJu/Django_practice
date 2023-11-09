@@ -5,4 +5,5 @@
     <h3>{{ article.title }}</h3>
     <p>{{ article.content }}</p>
     <p>{{ article.created_at }}</p>
+    <a href="{% url 'articles:edit' id=article.id %}">update</a>
 {% endblock %}
