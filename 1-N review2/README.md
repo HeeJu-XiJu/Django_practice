@@ -21,3 +21,11 @@ def comment_create(request, article_id):
         comment.save()
         return redirect('articles:detail', id=article.id)
 ```
+
+8. Comment Read
+- `detail.html`
+```
+    {% for comment in article.comment_set.all %}
+        <p>{{ comment.content }}</p>
+    {% endfor %}
+```
