@@ -6,3 +6,4 @@
 6. Read(All)
 7. Read(1)
 8. Delete
+9. Update

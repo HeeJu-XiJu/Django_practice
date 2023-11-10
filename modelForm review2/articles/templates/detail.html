@@ -3,4 +3,5 @@
 {% block body %}
     <h3>{{ article.title }}</h3>
     <p>{{ article.content }}</p>
+    <a href="{% url 'articles:update' id=article.id %}">update</a>
 {% endblock %}
