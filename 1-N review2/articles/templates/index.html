@@ -4,5 +4,6 @@
 <a href="{% url 'articles:create' %}">create</a>
     {% for article in articles %}
         <h3>{{ article.title }}</h3>
+        <a href="{% url 'articles:detail' id=article.id %}">detail</a>
     {% endfor %}
 {% endblock %}
