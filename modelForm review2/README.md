@@ -5,3 +5,4 @@
 5. Create
 6. Read(All)
 7. Read(1)
+8. Delete
