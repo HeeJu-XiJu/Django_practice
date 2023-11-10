@@ -29,3 +29,5 @@ def comment_create(request, article_id):
         <p>{{ comment.content }}</p>
     {% endfor %}
 ```
+
+9. Comment Delete
