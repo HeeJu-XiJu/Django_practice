@@ -3,3 +3,4 @@
 3. 'base.html' 설정
 4. 모델링/마이그레이션
 5. Create
+6. Read(All)
