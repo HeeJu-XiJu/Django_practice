@@ -2,3 +2,4 @@
 2. 앱생성/앱등록
 3. 모델링/마이그레이션
 4. 'base.html' 설정 및 Read(all)
+5. Create
