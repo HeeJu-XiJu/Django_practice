@@ -80,3 +80,54 @@ def index(request):
     </div>
 </div>
 ```
+
+6. Post Create
+- `_nav.html`
+```
+          <a class="nav-link active" aria-current="page" href="{% url 'posts:create' %}">Create</a>
+```
+
+- `urls.py`
+```
+    path('create/', views.create, name='create'),
+```
+
+- `forms.py`
+```
+from django import forms
+from .models import Post
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = '__all__'
+```
+
+- `views.py`
+```
+def create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('posts:index')
+    else:
+        form = PostForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'form.html', context)
+```
+
+- `form.html`
+```
+{% extends 'base.html' %}
+
+{% block body %}
+<form action="" method = 'POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>    
+{% endblock %}
+```
