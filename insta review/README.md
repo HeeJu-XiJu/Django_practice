@@ -378,3 +378,13 @@ def profile(request, username):
     }
     return render(request, 'profile.html', context)
 ```
+
+
+13. Like 모델링
+- `models.py`
+```
+    like_users = models.ManyToManyField(settings.AUTH_USER_MOEL, related_name='like_posts')
+```
+
+- User : Post_user_set, Post_like_posts_set
+- Post : User_id,
