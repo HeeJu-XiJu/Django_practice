@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Post
 from .forms import PostForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -25,3 +26,14 @@ def create(request):
         'form': form,
     }
     return render(request, 'form.html', context)
+
+@login_required
+def likes(request, id):
+    user = request.user
+    post = Post.objects.get(id=id)
+
+    if user in post.like_users.all():
+        post.like_users.remove(user)
+    else:
+        post.like_users.add(user)
+    return redirect('posts:index')

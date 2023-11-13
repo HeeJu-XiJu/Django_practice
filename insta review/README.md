@@ -388,3 +388,38 @@ def profile(request, username):
 
 - User : Post_user_set, Post_like_posts_set
 - Post : User_id,
+
+
+14. Like
+- `_card.html`
+```
+    <div class="card-body">
+        <a href="{% url 'posts:likes' id=post.id %}" class="text-reset text-decoration=none">
+            {% if user in post.like_users.all %}
+                <i class="bi bi-heart-fill" style="color:red"></i>
+            {% else %}
+                <i class="bi bi-heart"></i>
+            {% endif %}
+        </a> {{ post.like_users.all|length }}명이 좋아합니다.
+        <p class="'card-text">{{ post.content }}</p>
+    </div>
+```
+
+- `urls.py`
+```
+    path('<int:id>/likes', views.likes, name='likes'),
+```
+
+- `views.py`
+```
+@login_required
+def likes(request, id):
+    user = request.user
+    post = Post.objects.get(id=id)
+
+    if user in post.like_users.all():
+        post.like_users.remove(user)
+    else:
+        post.like_users.add(user)
+    return redirect('post:index')
+```

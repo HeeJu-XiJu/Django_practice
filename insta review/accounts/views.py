@@ -36,7 +36,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect('posts:login')
+    return redirect('accounts:login')
 
 
 def profile(request, username):
