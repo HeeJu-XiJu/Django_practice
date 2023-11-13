@@ -292,3 +292,63 @@ def login(request):
     }
     return render(request, 'accounts_form.html', context)
 ```
+
+
+11. Logout, Create 수정
+#### Logout
+- `_nav.html`
+```
+        <div class="navbar-nav">
+          {% if user.is_authenticated %}
+            <a class="nav-link active" aria-current="page" href="{% url 'posts:create' %}">Create</a>
+            <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+          {% else %}
+            <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+            <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+          {% endif %}
+        </div>
+```
+
+- `urls.py`
+```
+    path('logout/', views.logout, name='logout'),
+```
+
+- `views.py`
+```
+def logout(request):
+    auth_logout(request)
+    return redirect('posts:login')
+```
+
+#### Create 수정
+- `forms.py`
+```
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('content', 'image', )
+```
+
+- `views.py`
+```
+def create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('posts:index')
+    else:
+        form = PostForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'form.html', context)
+```
+
+- `_card.html`
+```
+    <div class="card-header">{{ post.user }}</div>
+```
