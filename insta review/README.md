@@ -186,3 +186,73 @@ class Post(models.Model):
 ```
 
 - db삭제 후 마이그레이션
+
+
+9. Accounts Signup
+- `_nav.html`
+```
+          <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+```
+
+- `insta-urls.py`
+```
+    path('accounts/', include('accounts.urls')),
+```
+
+- `accounts-urls.py`
+```
+from django.urls import path
+from . import views
+
+app_name = 'accounts'
+
+urlpatterns = [
+    path('signup/', views.signup, name='signup'),
+]
+```
+
+- `views.py`
+```
+from django.shortcuts import render, redirect
+from .forms import CustomUserCreationForm
+
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('posts:index')
+    else:
+        form = CustomUserCreationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts_form.html', context)
+```
+
+- `forms.py`
+```
+from django.contrib.auth.forms import UserCreationForm
+from .models import User
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ('username', 'profile_image',)
+```
+
+- `settings.py`-`INSTALLED_APPS`-'bootstrap5'
+
+- `accounts_form.html`
+```
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block body %}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit">
+    </form>
+{% endblock %}
+```
