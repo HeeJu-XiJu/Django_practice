@@ -470,3 +470,9 @@ def follows(request, username):
         me.followings.add(you)
     return redirect('accounts:profile', username=username)
 ```
+
+16. requirements.txt 추가
+- `pip freeze >> requirements.txt`
+
+- 같은 버전으로 설치할 때
+`pip install -r requirements.txt`
