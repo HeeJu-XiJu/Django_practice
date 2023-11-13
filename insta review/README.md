@@ -352,3 +352,29 @@ def create(request):
 ```
     <div class="card-header">{{ post.user }}</div>
 ```
+
+
+12. Profile
+- `_card.html`
+```
+    <div class="card-header">
+        <a href="{% url 'accounts:profile' username=post.user %}" class="text-reset text-decoration-none">
+        {{ post.user }}
+        </a>
+    </div>
+```
+
+- `urls.py`
+```
+    path('<str:username>/', views.profile, name='profile'),
+```
+
+- `views.py`
+```
+def profile(request, username):
+    user_info = User.objects.get(username=username)
+    context = {
+        'user_info': user_info,
+    }
+    return render(request, 'profile.html', context)
+```

@@ -1,7 +1,11 @@
 <div class="card">
-    <div class="card-header">{{ post.user }}</div>
-    <img src="{{ post.image.url }}" alt="">
+    <div class="card-header">
+        <a href="{% url 'accounts:profile' username=post.user %}" class="text-reset text-decoration-none">
+        {{ post.user }}
+        </a>
+    </div>
     <div class="card-body">
+        <img src="{{ post.image.url }}" alt="">
         <p class="'card-text">{{ post.content }}</p>
     </div>
 </div>
