@@ -25,3 +25,11 @@ def create(request):
         'form': form,
     }
     return render(request, 'form.html', context)
+
+
+def detail(request, post_id):
+    post = Post.objects.get(id=post_id)
+    context = {
+        'post': post,
+    }
+    return render(request, 'detail.html', context)

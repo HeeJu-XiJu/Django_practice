@@ -59,3 +59,5 @@ def login(request):
 8. Post Create
 
 9. Post Read(All)
+
+10. Post Read(1)
