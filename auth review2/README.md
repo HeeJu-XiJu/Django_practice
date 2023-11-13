@@ -52,3 +52,6 @@ def login(request):
             <div class="navbar-nav">
               {% if user.is_authenticated %}
 ```
+
+
+7. Logout
