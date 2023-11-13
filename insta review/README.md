@@ -423,3 +423,50 @@ def likes(request, id):
         post.like_users.add(user)
     return redirect('post:index')
 ```
+
+
+15. Follow
+- `models.py`
+```
+    followings = models.ManyToManyField('self', related_name='followers', symmetrical=False)
+```
+
+- `profile.html`
+```
+        <div class="col-3">{{ user_info}}</div>
+            <!-- user : 현재 로그인한 유저 / user_info : 현재 프로필페이지 유저 -->
+            {% if user != user_info %}
+            <div class="col-4">
+                {% if user in user_info.followers.all %}
+                    <a href="{% url 'accounts:follows' username=user_info %}" class="btn btn-primary">following</a>
+                {% else %}
+                    <a href="{% url 'accounts:follows' username=user_info %}" class="btn btn-secondary">follow</a>
+                {% endif %}
+            </div>
+            {% endif %}
+            <a href="" class="btn btn-light">follow</a>
+            <div class="row">
+                <div class="col">게시물 {{ user_info.post_set.all|length }}</div>
+                <div class="col">팔로워 {{ user_info.followers.all|length }}</div>
+                <div class="col">팔로잉 {{ user_info.followings.all|length }}</div>
+            </div>
+        </div>
+```
+
+- `urls.py`
+```
+    path('<str:username>/follows/', views.follows, name='follows'),
+```
+
+- `views.py`
+```
+def follows(request, username):
+    me = request.user
+    you = User.objects.get(username=username)
+
+    if you in me.followings.all():
+        me.followings.remove(you)
+    else:
+        me.followings.add(you)
+    return redirect('accounts:profile', username=username)
+```
