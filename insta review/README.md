@@ -152,3 +152,37 @@ class Post(models.Model):
 ```
 
 - 마이그레이션
+
+
+8. Accounts 모델링
+- `accounts-models.py`
+```
+class User(AbstractUser):
+    profile_image = ResizedImageField(
+        size=[500, 500],
+        crop=['middle', 'center'],
+        upload_to='profile'
+    )
+```
+
+- `settings.py`
+```
+AUTH_USER_MODEL = 'accounts.User'
+```
+
+-  `posts-models.py`
+```
+class Post(models.Model):
+    content = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+    # image = models.ImageField(upload_to='image/%Y/%m')
+    image = ResizedImageField(
+        size=[500, 500],
+        crop=['middle', 'center'],
+        upload_to='image/%Y/%m'
+    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+```
+
+- db삭제 후 마이그레이션
