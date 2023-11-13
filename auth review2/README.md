@@ -21,3 +21,34 @@ class CustomUserCreationForm(UserCreationForm):
         model = User
         fields = UserCreationForm.Meta.fields
 ```
+
+
+6. Login
+- `forms.py`
+```
+class CustomAuthenticationForm(AuthenticationForm):
+        pass
+```
+
+- `views.py`
+```
+def login(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request, request.POST)
+        if form.is_valid():
+            auth_login(request, form.get_user())
+            next_url = request.GET.get('next')
+            return redirect(next_url or 'posts:index')
+    else:
+        form = CustomAuthenticationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'form.html', context)
+```
+
+- `base.html`
+```
+            <div class="navbar-nav">
+              {% if user.is_authenticated %}
+```
