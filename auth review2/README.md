@@ -61,3 +61,16 @@ def login(request):
 9. Post Read(All)
 
 10. Post Read(1)
+
+11. Comment Create
+- `views.py`
+```
+def comment_create(request, post_id):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user_id = request.user.id
+        comment.post_id = post_id
+        comment.save()
+        return redirect('posts:detail', post_id=post_id)
+```

@@ -4,4 +4,9 @@
     <h3>{{ post.title}}</h3>
     <p>{{ post.content }}</p>
     <p>{{ post.user }}</p>
+    <form action="{% url 'posts:comment_create' post_id=post.id %}" method="POST">
+        {% csrf_token %}
+        {{ comment_form }}
+        <input type="submit">
+    </form>
 {% endblock %}
