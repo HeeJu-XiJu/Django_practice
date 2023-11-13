@@ -9,4 +9,7 @@
         {{ comment_form }}
         <input type="submit">
     </form>
+    {% for comment in comments %}
+        {{ comment.user }} : {{ comment.comment }}
+    {% endfor %}
 {% endblock %}

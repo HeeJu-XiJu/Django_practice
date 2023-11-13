@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import PostForm, CommentForm
-from .models import Post
+from .models import Post, Comment
 
 # Create your views here.
 def index(request):
@@ -30,9 +30,11 @@ def create(request):
 def detail(request, post_id):
     post = Post.objects.get(id=post_id)
     comment_form = CommentForm()
+    comments = Comment.objects.all()
     context = {
         'post': post,
         'comment_form':comment_form,
+        'comments': comments,
     }
     return render(request, 'detail.html', context)
 

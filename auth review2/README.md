@@ -74,3 +74,5 @@ def comment_create(request, post_id):
         comment.save()
         return redirect('posts:detail', post_id=post_id)
 ```
+
+12. Comment Read
