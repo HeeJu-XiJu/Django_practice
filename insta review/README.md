@@ -131,3 +131,24 @@ def create(request):
 </form>    
 {% endblock %}
 ```
+
+7. Image Resize 기능 추가
+- `pip install django-resized`
+
+- `models.py`
+```
+from django_resized import ResizedImageField
+
+class Post(models.Model):
+    content = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
+    # image = models.ImageField(upload_to='image/%Y/%m')
+    image = ResizedImageField(
+        size=[500, 500],
+        crop=['middle', 'center'],
+        upload_to='image/%Y/%m'
+    )
+```
+
+- 마이그레이션
