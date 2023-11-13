@@ -256,3 +256,39 @@ class CustomUserCreationForm(UserCreationForm):
     </form>
 {% endblock %}
 ```
+
+10. Login
+- `_nav.html`
+```
+          <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+```
+
+- `urls.py`
+```
+    path('login/', views.login, name='login'),
+```
+
+- `forms.py`
+```
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+
+class CustomAuthenticationForm(AuthenticationForm):
+    pass
+```
+
+- `views.py`
+```
+def login(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            auth_login(request, user)
+            return redirect('posts:index')
+    else:
+        form = CustomAuthenticationForm()
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts_form.html', context)
+```
