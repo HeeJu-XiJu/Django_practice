@@ -57,3 +57,5 @@ def login(request):
 7. Logout
 
 8. Post Create
+
+9. Post Read(All)

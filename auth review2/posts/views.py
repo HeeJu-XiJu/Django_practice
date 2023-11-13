@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from .forms import PostForm
+from .models import Post
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    posts = Post.objects.all()
+    context = {
+        'posts': posts
+    }
+    return render(request, 'index.html', context)
 
 
 def create(request):
