@@ -10,3 +10,14 @@ AbstractUser 기본 모델
 ![AbstracUser 기본모델](/auth%20review2/posts/reference/image.png)
 
 AbstracUser을 불러오는 방법 : get_user_model
+
+5. Signup
+- `forms.py`
+```
+from dajngo.contrib.auth.forms import UserCreationForm
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields
+```
