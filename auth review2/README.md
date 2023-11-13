@@ -6,6 +6,10 @@ Post : Comment = 1 : N
 User : Post = 1 : N
 Post : Comment = 1 : N
 
+N의 역할을 하는 model에 foreignkey 지정
+위에서 1의 역할을 하는 model에 자동으로 model_id 컬럼 생성
+N의 역할을 하는 model에 자동으로 model_set 컬럼 생성
+
 AbstractUser 기본 모델
 ![AbstracUser 기본모델](/auth%20review2/posts/reference/image.png)
 
