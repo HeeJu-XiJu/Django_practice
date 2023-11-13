@@ -394,7 +394,7 @@ def profile(request, username):
 - `_card.html`
 ```
     <div class="card-body">
-        <a href="{% url 'posts:likes' id=post.id %}" class="text-reset text-decoration=none">
+        <a href="{% url 'posts:likes' id=post.id %}" class="text-reset text-decoration-none">
             {% if user in post.like_users.all %}
                 <i class="bi bi-heart-fill" style="color:red"></i>
             {% else %}
