@@ -476,3 +476,30 @@ def follows(request, username):
 
 - 같은 버전으로 설치할 때
 `pip install -r requirements.txt`
+
+
+17. 기본이미지 설정(ex. admin 계정)
+- `profile.html`
+```
+        <div class="col-4">
+            {% if user_info.profile_image %}
+                <img src="{{ user_info.profile_image.url }}" alt="" class="rounded-circle img-fluid">
+            {% else %}
+                <img src="/insta review/media/profile/default.png" alt="" class="rounded-circle img-fluid">
+            {% endif %}
+        </div>
+```
+
+- `_card.html`
+```
+    <div class="card-header">
+        {% if post.user.profile_image %}
+        <img src="{{  post.user.profile_image.url  }}" alt="">
+        {% else %}
+        <img src="/insta review/media/profile/default.png" alt="">
+        {% endif %}
+        <a href="{% url 'accounts:profile' username=post.user %}" class="text-reset text-decoration-none">
+        {{ post.user }}
+        </a>
+    </div>
+```

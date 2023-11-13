@@ -1,6 +1,10 @@
 <div class="card">
     <div class="card-header">
+        {% if post.user.profile_image %}
         <img src="{{  post.user.profile_image.url  }}" alt="">
+        {% else %}
+        <img src="/insta review/media/profile/default.png" alt="">
+        {% endif %}
         <a href="{% url 'accounts:profile' username=post.user %}" class="text-reset text-decoration-none">
         {{ post.user }}
         </a>

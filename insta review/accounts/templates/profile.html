@@ -3,7 +3,11 @@
 {% block body %}
     <div class="row">
         <div class="col-4">
-            <img src="{{ user_info.profile_image.url }}" alt="" class="rounded-circle img-fluid">
+            {% if user_info.profile_image %}
+                <img src="{{ user_info.profile_image.url }}" alt="" class="rounded-circle img-fluid">
+            {% else %}
+                <img src="/insta review/media/profile/default.png" alt="" class="rounded-circle img-fluid">
+            {% endif %}
         </div>
         <div class="col-3">{{ user_info}}</div>
             <!-- user : 현재 로그인한 유저 / user_info : 현재 프로필페이지 유저 -->
